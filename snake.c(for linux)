@@ -13,6 +13,7 @@
 #define nail '+'
 #define mapx 22
 #define mapy 42
+#define win 100
 
 
 static struct termios ori_attr, cur_attr;
@@ -235,7 +236,7 @@ int main(){
 			printf("Creat fail\n");
 			return 0;
 		}
-		printf("eat food($) to grow\ndon't hit wall(*) or eat yourself(X)\nyou will WIN when you grow to 100 long\n\n'a'for hard  'b'for middle  'c'for easy\n");
+		printf("eat food($) to grow\ndon't hit wall(*) or eat yourself(X)\nyou will WIN when you grow to %d long\n\n'a'for hard  'b'for middle  'c'for easy\n",win);
 		while(1){
 			scanf("%c",&deee);
 			if(deee=='a'){
@@ -256,7 +257,7 @@ int main(){
 		creatf(a);
 		out(a);
 		while(1){
-			if(size==100){
+			if(size==win){
 				printf("WoW\nyou are great\n");
 				fgetc(stdin);
 				system("clear");
