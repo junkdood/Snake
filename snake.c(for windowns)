@@ -10,6 +10,7 @@
 #define nail '+'
 #define mapx 12
 #define mapy 22
+#define win 100
 int size=7;
 int org;
 int hard;
@@ -162,7 +163,7 @@ int main(){
 			printf("Creat fail\n");
 			return 0;
 		}
-		printf("³Ô$³¤´ó\n±ð×²Ç½£¨*£©ºÍ±ð³Ô×Ô¼º£¨XºÍ+£©\nÄã³¤µ½100¸ñ³¤±ã»áÓ®\n\n'a'ÎªÄÑ  'b'ÎªÕý³£  'c'Îª¼òµ¥\n");
+		printf("³Ô$³¤´ó\n±ð×²Ç½£¨*£©ºÍ±ð³Ô×Ô¼º£¨XºÍ+£©\nÄã³¤µ½%d¸ñ³¤±ã»áÓ®\n\n'a'ÎªÄÑ  'b'ÎªÕý³£  'c'Îª¼òµ¥\n",win);
 		while(1){
 			deee=getch();
 			if(deee=='a'){
@@ -183,7 +184,7 @@ int main(){
 		creatf(a);
 		out(a);
 		while(1){
-			if(size==100){
+			if(size==win){
 				printf("ÍÛÅ¶\nÌ«µõÁË\n");
 				system("pause");
 				system("cls");
