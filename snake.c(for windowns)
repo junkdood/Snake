@@ -1,0 +1,232 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<windows.h>
+#include <conio.h>
+#define head 'H'
+#define body 'X'
+#define wall '*'
+#define nothing ' '
+#define food '$'
+#define nail '+'
+#define mapx 12
+#define mapy 22
+int size=7;
+int org;
+int hard;
+
+typedef struct snake{
+	int x,y;
+	struct snake* next;
+}snake;
+
+int de=0;
+snake* first;
+
+int creat(char* a){
+	if(size>mapy-2||size<2)return 0;
+	int i;
+	snake* l;
+	first=(snake*)malloc(sizeof(snake));
+	first->x=1;
+	first->y=size;
+	l=first;
+	*(a+first->x*(mapy+1)+first->y)=head;
+	for(i=1;i<size;i++){
+		snake* r=(snake*)malloc(sizeof(snake));
+		r->x=1;
+		r->y=size-i;
+		*(a+r->x*(mapy+1)+r->y)=body;
+		l->next=r;
+		l=r;
+	}
+	*(a+l->x*(mapy+1)+l->y)=nail;
+	l->next=NULL;
+	return 1;
+}
+
+int creatf(char* a){
+	int x=1,y=1;
+	do{
+		x=rand()%mapx;
+		y=rand()%mapy;
+	}while(*(a+x*(mapy+1)+y)!=nothing&&size<100);
+	*(a+x*(mapy+1)+y)=food;
+	return 0;
+}
+
+int analize(char move,char* a){
+	int i;
+	snake* l=(snake*)malloc(sizeof(snake));
+	l->next=first;
+	first=l;
+	l=l->next;
+	if(move=='w'){
+		first->x=(l->x-1+mapx)%mapx;
+		first->y=l->y;
+	}
+	else if(move=='s'){
+		first->x=(l->x+1+mapx)%mapx;
+		first->y=l->y;
+	}
+	else if(move=='a'){
+		first->x=l->x;
+		first->y=(l->y-1+mapy)%mapy;
+	}
+	else if(move=='d'){
+		first->x=l->x;
+		first->y=(l->y+1+mapy)%mapy;
+	}
+	if(*(a+first->x*(mapy+1)+first->y)==nothing){
+		*(a+first->x*(mapy+1)+first->y)=head;
+		for(i=1;i<size-1;i++){
+			*(a+l->x*(mapy+1)+l->y)=body;
+			l=l->next;
+		}
+		*(a+l->x*(mapy+1)+l->y)=nail;
+		l=l->next;
+		*(a+l->x*(mapy+1)+l->y)=nothing;
+		free(l->next);
+		l->next=NULL;
+		return 1;
+	}
+	else if(*(a+first->x*(mapy+1)+first->y)==nail){
+		*(a+first->x*(mapy+1)+first->y)=head;
+		for(i=1;i<size-1;i++){
+			*(a+l->x*(mapy+1)+l->y)=body;
+			l=l->next;
+		}
+		*(a+l->x*(mapy+1)+l->y)=nail;
+		l=l->next;
+		*(a+l->x*(mapy+1)+l->y)=head;
+		free(l->next);
+		l->next=NULL;
+		return 1;
+	}
+	else if(*(a+first->x*(mapy+1)+first->y)==food){
+		*(a+first->x*(mapy+1)+first->y)=head;
+		size++;
+		for(i=1;i<size-1;i++){
+			*(a+l->x*(mapy+1)+l->y)=body;
+			l=l->next;
+		}
+		*(a+l->x*(mapy+1)+l->y)=nail;
+		l->next=NULL;
+		creatf(a);
+		return 1;
+	}
+	else return 0;
+}
+
+
+
+void out(char* a){
+	int i,r;
+	for(i=0;i<mapx;i++){
+		for(r=0;r<mapy;r++){
+			printf("%c",*(a+i*(mapy+1)+r));
+		}
+		printf("\n");
+	}
+}
+
+void clear(){
+	snake* temp;
+	while(first!=NULL){
+		temp=first;
+		first=first->next;
+		free(temp);
+	}
+}
+
+int main(){
+	org=size;
+	char dee,deee;
+	while(1){
+		size=org;
+		char move='d',temp='d';
+		char a[mapx][(mapy+1)]={
+		"*   **************   *",
+		"                      ",
+		"        ******        ",
+		"                      ",
+		"*   ***        ***   *",
+		"*   *            *   *",
+		"*   *            *   *",
+		"*   ***        ***   *",
+		"                      ",
+		"        ******        ",
+		"                      ",
+		"*   **************   *",
+		};
+		if(!(creat(a))){
+			printf("Creat fail\n");
+			return 0;
+		}
+		printf("³Ô$³¤´ó\n±ð×²Ç½£¨*£©ºÍ±ð³Ô×Ô¼º£¨XºÍ+£©\nÄã³¤µ½100¸ñ³¤±ã»áÓ®\n\n'a'ÎªÄÑ  'b'ÎªÕý³£  'c'Îª¼òµ¥\n");
+		while(1){
+			deee=getch();
+			if(deee=='a'){
+				hard=100;
+				break;
+			}
+			else if(deee=='b'){
+				hard=200;
+				break;
+			}
+			else if(deee=='c'){
+				hard=400;
+				break;
+			}
+			printf("ÄãÊä´íÁË\nÇëÊä¶àÒ»´Î:\n");
+		}
+		system("cls");
+		creatf(a);
+		out(a);
+		while(1){
+			if(size==100){
+				printf("ÍÛÅ¶\nÌ«µõÁË\n");
+				system("pause");
+				system("cls");
+				printf("ÄãÓ®ÁË£¡\n·ÖÊýÊÇ£º%d\n°´rÖØÀ´\n°´qÍË³ö\n",size-org);
+				break;
+			}
+			Sleep(hard);
+			if(_kbhit()){
+				temp=getch(); 
+			}
+			if(temp=='q'){
+				printf("ÔÝÍ£\n");
+				system("pause");
+			}
+			if((temp!='w'&&temp!='s'&&temp!='a'&&temp!='d')||(move=='w'&&temp=='s')||(move=='s'&&temp=='w')||(move=='a'&&temp=='d')||(move=='d'&&temp=='a')){
+				temp=move;
+				continue;
+			}
+			move=temp;
+			if(analize(move,a)==1){
+				system("cls"); 
+				out(a);
+			}
+			else{
+				printf("ÄãÊäÁË\nÀ¬»ø\n");
+				system("pause");
+				system("cls");
+				printf("ÄãÊäÁË\n·ÖÊýÊÇ£º%d\n°´rÖØÀ´\n°´qÍË³ö\n",size-org);
+				break;
+			}
+		}
+		clear();
+		while(1){
+			dee=getch();
+			if(dee=='r'){
+				break;
+			}
+			else if(dee=='q'){
+				return 0;
+			}
+			printf("ÄãÊä´íÁË\nÇëÊä¶àÒ»´Î:\n");
+		}
+		system("cls");
+	}
+	return 0;
+}
