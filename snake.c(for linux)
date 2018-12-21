@@ -145,8 +145,7 @@ int analize(char move,char* a){
 			l=l->next;
 		}
 		*(a+l->x*(mapy+1)+l->y)=nail;
-		l=l->next;
-		*(a+l->x*(mapy+1)+l->y)=nothing;
+		*(a+(l->next)->x*(mapy+1)+(l->next)->y)=nothing;
 		free(l->next);
 		l->next=NULL;
 		return 1;
@@ -158,8 +157,6 @@ int analize(char move,char* a){
 			l=l->next;
 		}
 		*(a+l->x*(mapy+1)+l->y)=nail;
-		l=l->next;
-		*(a+l->x*(mapy+1)+l->y)=head;
 		free(l->next);
 		l->next=NULL;
 		return 1;
