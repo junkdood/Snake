@@ -160,7 +160,7 @@ int main(){
 			printf("Creat fail\n");
 			return 0;
 		}
-		printf("³Ô$³¤´ó\n±ð×²Ç½£¨*£©ºÍ±ð³Ô×Ô¼º£¨XºÍ+£©\nÄã³¤µ½%d¸ñ³¤±ã»áÓ®\n\n'a'ÎªÄÑ  'b'ÎªÕý³£  'c'Îª¼òµ¥\n",win);
+		printf("吃$长大\n别撞墙（*）和别吃自己（X和+）\n你长到%d格长便会赢\n\n'a'为难  'b'为正常  'c'为简单\n",win);
 		while(1){
 			deee=getch();
 			if(deee=='a'){
@@ -175,17 +175,17 @@ int main(){
 				hard=400;
 				break;
 			}
-			printf("ÄãÊä´íÁË\nÇëÊä¶àÒ»´Î:\n");
+			printf("你输错了\n请输多一次:\n");
 		}
 		system("cls");
 		creatf(a);
 		out(a);
 		while(1){
 			if(size==win){
-				printf("ÍÛÅ¶\nÌ«µõÁË\n");
+				printf("哇哦\n太吊了\n");
 				system("pause");
 				system("cls");
-				printf("ÄãÓ®ÁË£¡\n·ÖÊýÊÇ£º%d\n°´rÖØÀ´\n°´qÍË³ö\n",size-org);
+				printf("你赢了！\n分数是：%d\n按r重来\n按q退出\n",size-org);
 				break;
 			}
 			Sleep(hard);
@@ -193,7 +193,7 @@ int main(){
 				temp=getch(); 
 			}
 			if(temp=='q'){
-				printf("ÔÝÍ£\n");
+				printf("暂停\n");
 				system("pause");
 			}
 			if((temp!='w'&&temp!='s'&&temp!='a'&&temp!='d')||(move=='w'&&temp=='s')||(move=='s'&&temp=='w')||(move=='a'&&temp=='d')||(move=='d'&&temp=='a')){
@@ -206,10 +206,10 @@ int main(){
 				out(a);
 			}
 			else{
-				printf("ÄãÊäÁË\nÀ¬»ø\n");
+				printf("你输了\n垃圾\n");
 				system("pause");
 				system("cls");
-				printf("ÄãÊäÁË\n·ÖÊýÊÇ£º%d\n°´rÖØÀ´\n°´qÍË³ö\n",size-org);
+				printf("你输了\n分数是：%d\n按r重来\n按q退出\n",size-org);
 				break;
 			}
 		}
@@ -222,7 +222,7 @@ int main(){
 			else if(dee=='q'){
 				return 0;
 			}
-			printf("ÄãÊä´íÁË\nÇëÊä¶àÒ»´Î:\n");
+			printf("你输错了\n请输多一次:\n");
 		}
 		system("cls");
 	}
